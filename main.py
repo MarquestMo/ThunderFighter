@@ -2,6 +2,7 @@
 
 import sys
 import pygame
+from random import randint
 #-------------------------------------------
 pygame.init()
 size = width, height = 480, 960
@@ -15,6 +16,37 @@ plane_rect = plane.get_rect()
 plane_d = [0, 930]
 plane_rect = plane_rect.move(plane_d)
 #-------------------------------------------
+class enemy:
+    def __init__(self):
+        """初始化单个敌人"""
+        self.d = [randint(0,464),randint(0,800)]
+        #self.d = [89,520]
+        self.enemy = pygame.image.load("enemy.png") #加载图片
+        #self.enemy_rect = self.enemy.get_rect() #获取矩形区域
+        #self.enemy_rect.move(self.d)
+        #screen.blit(self.enemy, self.enemy_rect)
+        
+    def move(self, d):
+        self.d = d
+        
+    def up(self):
+        temp = [randint(-10,10),randint(-10,10)]
+        self.d = [self.d[0]+temp[0],self.d[1]+temp[1]]
+        if self.d[0]<0:
+            self.d[0] = 0
+        elif self.d[0]>464:
+            self.d[0] = 464
+        if self.d[1]<0:
+            self.d[1] = 0
+        elif self.d[1]>800:
+            self.d[1] = 800
+#-------------------------------------------
+enemies = []
+for i in range(100):
+    enemies.append(enemy()) #初始化实例
+    print(enemies[i].d)
+
+
 while True:
     clock.tick(120)
     screen.fill(color)
@@ -44,6 +76,9 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
 
+    for i in range(len(enemies)):
+        enemies[i].up()
+        screen.blit(enemies[i].enemy, enemies[i].d)
     screen.blit(plane, plane_rect)
     pygame.display.flip()
 #-------------------------------------------
