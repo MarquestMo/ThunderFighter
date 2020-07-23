@@ -30,7 +30,7 @@ class enemy:
         self.d = d
         
     def up(self):
-        temp = [randint(-10,10),randint(-10,10)]
+        temp = [randint(-50,50),randint(-50,50)]
         self.d = [self.d[0]+temp[0],self.d[1]+temp[1]]
         if self.d[0]<0:
             self.d[0] = 0
@@ -42,7 +42,7 @@ class enemy:
             self.d[1] = 800
 #-------------------------------------------
 enemies = []
-for i in range(100):
+for i in range(1000):   #敌人数量
     enemies.append(enemy()) #初始化实例
     print(enemies[i].d)
 
