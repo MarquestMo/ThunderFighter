@@ -42,10 +42,10 @@ class enemy:
             self.d[1] = 800
 #-------------------------------------------
 enemies = []
-for i in range(1000):   #敌人数量
+for i in range(10):   #敌人数量
     enemies.append(enemy()) #初始化实例
     print(enemies[i].d)
-
+del_list = [-1]    #已删除对象的序号
 
 while True:
     clock.tick(120)
@@ -68,17 +68,23 @@ while True:
             plane_d[1] +=4
             plane_rect = plane_rect.move(0,4)
         if pressed[pygame.K_SPACE]:
-            print(plane_d[0]+15,0,plane_d[0],plane_d[1])  #DEBUG
+            #print(plane_d[0]+15,0,plane_d[0],plane_d[1])  #DEBUG
             pygame.draw.line(screen, (204,51,17), (plane_d[0]+16,0),(plane_d[0]+16,plane_d[1]), 2)
-        #print(plane_d) #DEBUG
+            
+            for i in range(len(enemies)):
+                if enemies[i].d[0]>=plane_d[0]-6 or enemies[i].d[0]<=plane_d[0]+6:
+                     del_list.append(i)
+        print(len(plane_d)) #DEBUG
     #检查关闭点击
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
 
+    #print(del_list) #DEBUG
     for i in range(len(enemies)):
-        enemies[i].up()
-        screen.blit(enemies[i].enemy, enemies[i].d)
+        if del_list.count(i)!=1:
+            #enemies[i].up()
+            screen.blit(enemies[i].enemy, enemies[i].d)
     screen.blit(plane, plane_rect)
     pygame.display.flip()
 #-------------------------------------------
