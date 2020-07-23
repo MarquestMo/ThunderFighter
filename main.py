@@ -17,6 +17,8 @@ plane_rect = plane_rect.move(plane_d)
 #-------------------------------------------
 while True:
     clock.tick(120)
+    screen.fill(color)
+    
     temp = plane_d #改变前坐标
     pressed = pygame.key.get_pressed() #获得所有键盘按钮的状态
     #print(pressed[pygame.K_RIGHT])  #DEBUG
@@ -33,13 +35,15 @@ while True:
         if pressed[pygame.K_DOWN] and plane_d[1]+4<=930:
             plane_d[1] +=4
             plane_rect = plane_rect.move(0,4)
-        print(plane_d)
+        if pressed[pygame.K_SPACE]:
+            print(plane_d[0]+15,0,plane_d[0],plane_d[1])  #DEBUG
+            pygame.draw.line(screen, (204,51,17), (plane_d[0]+16,0),(plane_d[0]+16,plane_d[1]), 2)
+        #print(plane_d) #DEBUG
     #检查关闭点击
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-            
-    screen.fill(color)
+
     screen.blit(plane, plane_rect)
     pygame.display.flip()
 #-------------------------------------------
